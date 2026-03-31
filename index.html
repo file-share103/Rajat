@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rajat Mishra — Sales & Finance Professional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#060608;
+  --bg2:#0d0d10;
+  --bg3:#13131a;
+  --border:#1e1e28;
+  --gold:#c8a84b;
+  --gold2:#e6c96e;
+  --gold3:#f5e4b0;
+  --muted:#55556a;
+  --text:#b8b8cc;
+  --white:#eeeef5;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{width:36px;height:36px;border:1px solid rgba(200,168,75,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;}
+body.ch #cur-dot{width:10px;height:10px;background:var(--gold2);}
+body.ch #cur-ring{width:56px;height:56px;border-color:rgba(200,168,75,.7);}
+
+/* CANVAS */
+#star-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.045'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.7;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;transition:background .4s,backdrop-filter .4s;}
+nav.scrolled{background:rgba(6,6,8,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--white);text-decoration:none;letter-spacing:.06em;}
+.nav-logo b{color:var(--gold);}
+.nav-links{display:flex;gap:2.6rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-hire{padding:.5rem 1.4rem !important;border:1px solid var(--gold);color:var(--gold) !important;transition:background .3s,color .3s !important;}
+.nav-hire:hover{background:var(--gold) !important;color:var(--bg) !important;}
+.nav-hire::after{display:none !important;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5rem;position:relative;z-index:2;overflow:hidden;}
+.hero-bg-letter{position:absolute;right:-2rem;top:50%;transform:translateY(-52%);font-family:'Playfair Display',serif;font-size:clamp(18rem,28vw,30rem);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(200,168,75,.05);line-height:1;pointer-events:none;user-select:none;}
+.hero-top{font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:1rem;margin-bottom:2rem;opacity:0;animation:up .8s .2s forwards;}
+.hero-top::before{content:'';display:block;width:3rem;height:1px;background:var(--gold);}
+h1.hero-h{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(4rem,9.5vw,9.5rem);color:var(--white);line-height:.93;letter-spacing:-.02em;opacity:0;animation:up .9s .35s forwards;}
+h1.hero-h span{display:block;font-style:italic;color:var(--gold);}
+.hero-tagline{margin-top:2.2rem;display:flex;align-items:flex-start;gap:2rem;opacity:0;animation:up .8s .56s forwards;}
+.hero-tag-text{font-size:.97rem;color:var(--text);letter-spacing:.04em;max-width:440px;line-height:1.75;}
+.hero-divider{width:1px;height:56px;background:var(--border);flex-shrink:0;margin-top:.2rem;}
+.hero-roles{display:flex;flex-direction:column;gap:.5rem;}
+.hero-roles strong{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--white);}
+.hero-roles span{font-size:.7rem;letter-spacing:.1em;color:var(--muted);}
+.hero-ctas{display:flex;gap:1.2rem;margin-top:3rem;opacity:0;animation:up .8s .72s forwards;align-items:center;}
+.btn-p{display:inline-flex;align-items:center;gap:.7rem;padding:.88rem 2.2rem;background:var(--gold);color:var(--bg);font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .3s,transform .3s;}
+.btn-p:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-s{display:inline-flex;align-items:center;gap:.7rem;padding:.88rem 2.2rem;border:1px solid var(--border);color:var(--muted);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:border-color .3s,color .3s;}
+.btn-s:hover{border-color:var(--gold);color:var(--gold);}
+.hero-scroll{position:absolute;bottom:2.5rem;left:5rem;display:flex;align-items:center;gap:.8rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);opacity:0;animation:fadeIn 1s 1.3s forwards;}
+.hero-scroll-bar{width:3rem;height:1px;background:var(--muted);overflow:hidden;position:relative;}
+.hero-scroll-bar::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:var(--gold);animation:scrollAnim 2s 1.5s infinite ease-in-out;}
+@keyframes scrollAnim{0%{left:-100%;}100%{left:100%;}}
+.hero-stats{position:absolute;right:5rem;bottom:3rem;display:flex;gap:2.6rem;opacity:0;animation:up .8s .9s forwards;}
+.h-stat-n{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--white);line-height:1;}
+.h-stat-n b{color:var(--gold);}
+.h-stat-l{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;}
+
+/* MARQUEE */
+.marquee-strip{position:relative;z-index:2;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);padding:.85rem 0;overflow:hidden;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 22s linear infinite;}
+.marquee-item{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:0 2.4rem;display:flex;align-items:center;gap:2.4rem;}
+.marquee-item::after{content:'✦';color:var(--gold);font-size:.48rem;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:8rem 5rem;position:relative;z-index:2;}
+.sec-tag{font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;}
+.sec-tag::before{content:'';display:inline-block;width:2rem;height:1px;background:var(--gold);}
+.sec-h{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4vw,3.8rem);font-weight:700;color:var(--white);line-height:1.05;margin-bottom:3.5rem;}
+.sec-h i{font-style:italic;color:var(--gold);}
+
+/* ABOUT */
+#about{background:var(--bg2);border-top:1px solid var(--border);}
+.about-wrap{display:grid;grid-template-columns:1fr 1.9fr;gap:6rem;align-items:start;}
+.about-card{background:var(--bg3);border:1px solid var(--border);padding:2.2rem;position:relative;overflow:hidden;}
+.about-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);}
+.about-avatar{width:100%;aspect-ratio:4/5;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;border:1px solid var(--border);margin-bottom:1.6rem;position:relative;overflow:hidden;}
+.about-avatar::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 80%,rgba(200,168,75,.07) 0%,transparent 60%);}
+.about-avatar svg{opacity:.15;}
+.av-name{font-family:'Playfair Display',serif;font-size:.78rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.about-meta{display:flex;flex-direction:column;gap:0;}
+.am-row{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--border);font-size:.78rem;}
+.am-row:last-child{border:none;padding-bottom:0;}
+.am-k{color:var(--muted);}
+.am-v{color:var(--white);font-weight:400;text-align:right;}
+.am-v.gold{color:var(--gold);}
+.about-right p{font-size:.94rem;line-height:1.95;color:var(--text);margin-bottom:1.5rem;}
+.about-right p strong{color:var(--white);}
+.about-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.2rem;}
+.a-pill{border:1px solid var(--border);background:var(--bg);padding:1.4rem;text-align:center;transition:border-color .3s,transform .3s;}
+.a-pill:hover{border-color:var(--gold);transform:translateY(-4px);}
+.a-pill-n{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--gold);line-height:1;margin-bottom:.3rem;}
+.a-pill-l{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+/* SKILLS */
+#skills{background:var(--bg);}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.s-block{background:var(--bg);padding:2.4rem;transition:background .3s;position:relative;overflow:hidden;}
+.s-block::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .45s;}
+.s-block:hover{background:var(--bg2);}
+.s-block:hover::before{width:100%;}
+.s-icon{width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.4rem;transition:border-color .3s;}
+.s-block:hover .s-icon{border-color:var(--gold);}
+.s-title{font-family:'Playfair Display',serif;font-size:1.12rem;color:var(--white);margin-bottom:.5rem;}
+.s-body{font-size:.79rem;line-height:1.72;color:var(--muted);margin-bottom:1.4rem;}
+.s-bar{height:1px;background:var(--border);position:relative;margin-top:auto;}
+.s-bar-fill{height:1px;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1);}
+.s-pct{position:absolute;right:0;top:-20px;font-size:.64rem;color:var(--gold);}
+
+/* EXPERIENCE */
+#experience{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.exp-grid{display:grid;grid-template-columns:260px 1fr;gap:7rem;}
+.exp-stick{position:sticky;top:120px;align-self:start;}
+.exp-stick p{font-size:.87rem;line-height:1.8;color:var(--text);margin-top:1rem;}
+.exp-list{display:flex;flex-direction:column;}
+.e-item{padding:2.8rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:130px 1fr;gap:2.4rem;}
+.e-item:first-child{border-top:1px solid var(--border);}
+.e-year{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-top:.4rem;line-height:1.9;}
+.e-dot{width:7px;height:7px;border:1px solid var(--gold);transform:rotate(45deg);display:inline-block;margin-right:.5rem;transition:background .3s;vertical-align:middle;}
+.e-item:hover .e-dot{background:var(--gold);}
+.e-role{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--white);margin-bottom:.3rem;}
+.e-co{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;}
+.e-desc{font-size:.85rem;line-height:1.87;color:var(--text);margin-bottom:1.3rem;}
+.e-tags{display:flex;flex-wrap:wrap;gap:.45rem;}
+.e-tag{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .8rem;border:1px solid var(--border);color:var(--muted);transition:all .3s;}
+.e-item:hover .e-tag{border-color:rgba(200,168,75,.22);color:var(--text);}
+
+/* CONTACT */
+#contact{background:var(--bg);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.c-left p{font-size:.93rem;line-height:1.9;color:var(--text);margin-bottom:2.2rem;}
+.c-links{display:flex;flex-direction:column;gap:.7rem;}
+.c-link{display:flex;align-items:center;gap:1.2rem;padding:1rem 1.3rem;border:1px solid var(--border);background:var(--bg2);text-decoration:none;color:var(--text);font-size:.84rem;transition:all .3s;position:relative;overflow:hidden;}
+.c-link-bar{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);transition:width .35s;}
+.c-link:hover .c-link-bar{width:3px;}
+.c-link:hover{border-color:rgba(200,168,75,.3);color:var(--white);padding-left:1.7rem;}
+.c-link-ico{font-size:.95rem;flex-shrink:0;}
+.c-link-info strong{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;}
+.cf{display:flex;flex-direction:column;gap:1rem;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cf-f{position:relative;}
+.cf-f input,.cf-f textarea{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--white);font-family:'Outfit',sans-serif;font-size:.84rem;font-weight:300;padding:1rem 1.2rem;outline:none;resize:none;transition:border-color .3s;}
+.cf-f textarea{height:118px;}
+.cf-f input:focus,.cf-f textarea:focus{border-color:var(--gold);}
+.cf-f input::placeholder,.cf-f textarea::placeholder{color:var(--muted);}
+.cf-f label{position:absolute;top:-8px;left:1rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);background:var(--bg2);padding:0 .35rem;}
+.btn-send{display:inline-flex;align-items:center;gap:.8rem;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Outfit',sans-serif;font-size:.74rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;padding:.88rem 2.4rem;cursor:none;transition:all .3s;}
+.btn-send:hover{background:var(--gold);color:var(--bg);}
+.btn-send.ok{background:rgba(200,168,75,.12);border-color:var(--gold2);color:var(--gold2);}
+
+/* FOOTER */
+footer{position:relative;z-index:2;border-top:1px solid var(--border);background:var(--bg2);padding:1.9rem 5rem;display:flex;justify-content:space-between;align-items:center;}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);}
+.f-logo b{color:var(--gold);}
+footer p{font-size:.7rem;letter-spacing:.08em;color:var(--muted);}
+.fg{color:var(--gold);}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.rev{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s ease;}
+.rev-l{opacity:0;transform:translateX(-28px);transition:opacity .7s ease,transform .7s ease;}
+.rev.in,.rev-l.in{opacity:1;transform:none;}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);}
+::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+
+@media(max-width:960px){
+  nav{padding:1.2rem 2rem;}
+  .nav-links{display:none;}
+  #hero{padding:7rem 2rem 5rem;}
+  .hero-bg-letter{display:none;}
+  .hero-stats{position:static;margin-top:2.4rem;flex-wrap:wrap;gap:1.8rem;}
+  .hero-scroll{left:2rem;}
+  section{padding:5rem 2rem;}
+  .about-wrap,.exp-grid,.contact-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:1fr 1fr;}
+  .e-item{grid-template-columns:1fr;}
+  .exp-stick{position:static;}
+  .cf-row{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:.7rem;text-align:center;padding:1.5rem 2rem;}
+  .hero-ctas{flex-wrap:wrap;}
+}
+@media(max-width:600px){
+  .skills-grid{grid-template-columns:1fr;}
+  .about-pills{grid-template-columns:1fr 1fr;}
+  .hero-tagline{flex-direction:column;}
+}
+
+/* MOBILE SIDEBAR */
+#sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);z-index:900;opacity:0;pointer-events:none;transition:opacity .4s ease;}
+#mobile-sidebar{position:fixed;top:0;left:-320px;width:320px;height:100vh;background:var(--bg);border-right:1px solid var(--border);z-index:901;padding:5rem 2.4rem;display:flex;flex-direction:column;gap:3.5rem;transition:left .4s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:30px 0 60px rgba(0,0,0,0.8);}
+body.sidebar-open #sidebar-overlay{opacity:1;pointer-events:all;}
+body.sidebar-open #mobile-sidebar{left:0;}
+
+.sidebar-logo{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);letter-spacing:.05em;}
+.sidebar-logo b{color:var(--gold);}
+.sidebar-links{list-style:none;display:flex;flex-direction:column;gap:1.8rem;}
+.sidebar-links a{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:all .3s ease;display:block;}
+.sidebar-links a:hover, .sidebar-links a.active{color:var(--gold);padding-left:.5rem;}
+
+#nav-toggle{display:none;background:none;border:none;flex-direction:column;gap:6px;cursor:none;z-index:1000;padding:.5rem;margin-right:-.5rem;}
+#nav-toggle span{display:block;width:24px;height:1px;background:var(--gold);transition:transform .3s, opacity .3s, width .3s;}
+
+@media(max-width:960px){
+  #nav-toggle{display:flex;}
+  body.sidebar-open{overflow:hidden;}
+  body.sidebar-open #nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.sidebar-open #nav-toggle span:nth-child(2){opacity:0;width:0;}
+  body.sidebar-open #nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+}
+</style>
+</head>
+<body>
+
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<canvas id="star-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">R.<b>Mishra</b></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-hire">Hire Me</a></li>
+  </ul>
+  <button id="nav-toggle" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div id="sidebar-overlay"></div>
+<div id="mobile-sidebar">
+  <div class="sidebar-logo">R.<b>Mishra</b></div>
+  <ul class="sidebar-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-letter" aria-hidden="true">R</div>
+  <div class="hero-top">Sales &amp; Finance Professional · Open to Work</div>
+  <h1 class="hero-h">Rajat<span>Mishra</span></h1>
+  <div class="hero-tagline">
+    <p class="hero-tag-text">Bridging financial precision with persuasive sales — turning numbers into narratives and leads into lasting client relationships.</p>
+    <div class="hero-divider"></div>
+    <div class="hero-roles">
+      <strong>Sales Officer</strong><span>Sansiv Bio-Tech</span>
+      <strong style="margin-top:.5rem;">Sales Officer</strong><span>Atral Cyrus Life Sciences</span>
+      <strong style="margin-top:.5rem;">Accountant</strong><span>Sitapur Shiksha Sansthan</span>
+    </div>
+  </div>
+  <div class="hero-ctas">
+    <a href="#contact" class="btn-p">Get in Touch <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#experience" class="btn-s">View Experience</a>
+  </div>
+  <div class="hero-scroll"><div class="hero-scroll-bar"></div>Scroll</div>
+  <div class="hero-stats">
+    <div><div class="h-stat-n">2<b>+</b></div><div class="h-stat-l">Companies</div></div>
+    <div><div class="h-stat-n"><b>GST</b></div><div class="h-stat-l">Certified</div></div>
+    <div><div class="h-stat-n">ERP<b>9</b></div><div class="h-stat-l">Tally Expert</div></div>
+    <div><div class="h-stat-n">MS<b>+</b></div><div class="h-stat-l">Office Adv.</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item">Tally ERP9</div><div class="marquee-item">GST Compliance</div>
+    <div class="marquee-item">MS Office Advanced</div><div class="marquee-item">Sales Strategy</div>
+    <div class="marquee-item">Client Negotiation</div><div class="marquee-item">Account Management</div>
+    <div class="marquee-item">Fast Typing</div><div class="marquee-item">B2B Sales</div>
+    <div class="marquee-item">Invoicing</div><div class="marquee-item">Bank Reconciliation</div>
+    <div class="marquee-item">Tally ERP9</div><div class="marquee-item">GST Compliance</div>
+    <div class="marquee-item">MS Office Advanced</div><div class="marquee-item">Sales Strategy</div>
+    <div class="marquee-item">Client Negotiation</div><div class="marquee-item">Account Management</div>
+    <div class="marquee-item">Fast Typing</div><div class="marquee-item">B2B Sales</div>
+    <div class="marquee-item">Invoicing</div><div class="marquee-item">Bank Reconciliation</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="rev-l">
+      <div class="about-card">
+        <div class="about-avatar">
+          <img src="mypic/rajat.png" alt="Rajat Mishra" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;z-index:1;">
+        </div>
+        <div class="about-meta">
+          <div class="am-row"><span class="am-k">Role</span><span class="am-v">Sales &amp; Accounts</span></div>
+          <div class="am-row"><span class="am-k">Experience</span><span class="am-v">0–2 Years</span></div>
+          <div class="am-row"><span class="am-k">Location</span><span class="am-v">Lucknow, India</span></div>
+          <div class="am-row"><span class="am-k">Email</span><span class="am-v" style="font-size:.7rem;">rm1233377@gmail.com</span></div>
+          <div class="am-row"><span class="am-k">Status</span><span class="am-v gold">Open to Work ✦</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right rev">
+      <div class="sec-tag">About Me</div>
+      <h2 class="sec-h">Who I <i>Am</i></h2>
+      <p>I'm Rajat Mishra — a dual-skilled professional who operates at the crossroads of accounting and sales. My work combines financial rigour with the human craft of persuasion, making me a versatile asset in any business environment.</p>
+      <p>With hands-on experience at <strong>Atral Cyrus Life Sciences</strong> and <strong>Sansiv Bio-Tech</strong>, I've built deep expertise in Tally ERP9, complete GST lifecycle management, and advanced MS Office — while simultaneously developing the sales edge that drives real commercial results in competitive pharma and biotech markets.</p>
+      <p>I bring speed, accuracy, and a genuine hunger to every role. Currently seeking opportunities in finance, sales, or business operations where I can contribute meaningfully and keep growing.</p>
+      <div class="about-pills">
+        <div class="a-pill rev"><div class="a-pill-n">2<span style="color:var(--white);font-size:1.1rem;">+</span></div><div class="a-pill-l">Organisations</div></div>
+        <div class="a-pill rev"><div class="a-pill-n" style="font-size:1.3rem;">GST</div><div class="a-pill-l">End-to-End</div></div>
+        <div class="a-pill rev"><div class="a-pill-n" style="font-size:1.3rem;">ERP9</div><div class="a-pill-l">Tally Expert</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-tag rev">Core Competencies</div>
+  <h2 class="sec-h rev">My <i>Skills</i></h2>
+  <div class="skills-grid">
+    <div class="s-block rev"><div class="s-icon">📊</div><div class="s-title">Tally ERP9</div><div class="s-body">Full-cycle bookkeeping, ledger management, voucher entries, trial balance, and balance sheet preparation.</div><div class="s-bar"><div class="s-bar-fill" data-w="88"></div><div class="s-pct">88%</div></div></div>
+    <div class="s-block rev"><div class="s-icon">🧾</div><div class="s-title">GST Compliance</div><div class="s-body">GSTR-1, GSTR-3B filing, ITC reconciliation, e-invoicing, and full GST lifecycle management.</div><div class="s-bar"><div class="s-bar-fill" data-w="85"></div><div class="s-pct">85%</div></div></div>
+    <div class="s-block rev"><div class="s-icon">💼</div><div class="s-title">MS Office — Advanced</div><div class="s-body">Excel pivot tables, VLOOKUP, data analysis, professional Word documentation and PowerPoint presentations.</div><div class="s-bar"><div class="s-bar-fill" data-w="90"></div><div class="s-pct">90%</div></div></div>
+    <div class="s-block rev"><div class="s-icon">🤝</div><div class="s-title">Sales & Negotiation</div><div class="s-body">Client acquisition, lead nurturing, deal closure, distributor management, and persuasive B2B communication.</div><div class="s-bar"><div class="s-bar-fill" data-w="83"></div><div class="s-pct">83%</div></div></div>
+    <div class="s-block rev"><div class="s-icon">⌨️</div><div class="s-title">Fast & Accurate Typing</div><div class="s-body">High-speed data entry with precision — critical for accounts, CRM updates, and rapid documentation.</div><div class="s-bar"><div class="s-bar-fill" data-w="80"></div><div class="s-pct">80%</div></div></div>
+    <div class="s-block rev"><div class="s-icon">📋</div><div class="s-title">Account Management</div><div class="s-body">AR/AP tracking, bank reconciliation, invoicing, payment follow-ups, and accurate financial record-keeping.</div><div class="s-bar"><div class="s-bar-fill" data-w="86"></div><div class="s-pct">86%</div></div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="exp-grid">
+    <div class="exp-stick rev-l">
+      <div class="sec-tag">Career Path</div>
+      <h2 class="sec-h">Work<br><i>Experience</i></h2>
+      <p>1–2 years of professional experience across life sciences and biotech — managing both the books and the business.</p>
+    </div>
+    <div class="exp-list">
+      <div class="e-item rev">
+        <div class="e-year"><span class="e-dot"></span>2023<br>Present</div>
+        <div>
+          <div class="e-role">Sales Officer</div>
+          <div class="e-co">Sansiv Bio-Tech</div>
+          <div class="e-desc">Drove product sales and client acquisition across the biotech sector. Managed distributor networks, handled order processing, and executed follow-up cycles that improved client retention. Applied persuasion and product knowledge to consistently meet sales targets.</div>
+          <div class="e-tags"><span class="e-tag">Sales</span><span class="e-tag">Client Relations</span><span class="e-tag">Biotech</span><span class="e-tag">Negotiation</span><span class="e-tag">B2B</span></div>
+        </div>
+      </div>
+      <div class="e-item rev">
+        <div class="e-year"><span class="e-dot"></span>2022<br>2023</div>
+        <div>
+          <div class="e-role">Accounts &amp; Sales Executive</div>
+          <div class="e-co">Atral Cyrus Life Sciences</div>
+          <div class="e-desc">Managed all accounting operations including Tally ERP9 entries, GST return filing, and bank reconciliation. Simultaneously supported the sales division with client documentation, order tracking, and payment recovery — bridging finance and sales seamlessly.</div>
+          <div class="e-tags"><span class="e-tag">Tally ERP9</span><span class="e-tag">GST Filing</span><span class="e-tag">Invoicing</span><span class="e-tag">MS Office</span><span class="e-tag">Life Sciences</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-tag rev">Let's Connect</div>
+  <h2 class="sec-h rev">Get in <i>Touch</i></h2>
+  <div class="contact-grid">
+    <div class="c-left rev-l">
+      <p>Open to roles in sales, accounting, finance, or business operations. If you have an opportunity or just want to connect — I'd love to hear from you.</p>
+      <div class="c-links">
+        <a href="mailto:rm1233377@gmail.com" class="c-link"><div class="c-link-bar"></div><span class="c-link-ico">✉</span><div class="c-link-info"><strong>Email</strong>rm1233377@gmail.com</div></a>
+        <a href="https://wa.me/917905002124" target="_blank" class="c-link"><div class="c-link-bar"></div><span class="c-link-ico">📞</span><div class="c-link-info"><strong>Phone / WhatsApp</strong>+91 79050 02124</div></a>
+        <a href="#" class="c-link"><div class="c-link-bar"></div><span class="c-link-ico">📍</span><div class="c-link-info"><strong>Location</strong>Lucknow, India</div></a>
+        <a href="https://www.linkedin.com/in/rajat-mishra-2866863bb?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="c-link"><div class="c-link-bar"></div><span class="c-link-ico">💼</span><div class="c-link-info"><strong>LinkedIn</strong>Connect with me</div></a>
+      </div>
+    </div>
+    <div class="cf rev">
+      <div class="cf-row">
+        <div class="cf-f"><label>Your Name</label><input id="cf1" type="text" placeholder="Full Name"/></div>
+        <div class="cf-f"><label>Your Email</label><input id="cf2" type="email" placeholder="email@example.com"/></div>
+      </div>
+      <div class="cf-f"><label>Subject</label><input id="cf3" type="text" placeholder="Job Opportunity / Collaboration"/></div>
+      <div class="cf-f"><label>Message</label><textarea id="cf4" placeholder="Write your message here…"></textarea></div>
+      <button class="btn-send" id="bsend" onclick="doSend()">Send Message <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">R.<b>Mishra</b></div>
+  <p>© 2025 <span class="fg">Rajat Mishra</span>. All rights reserved.</p>
+  <p>Made with <span class="fg">♥</span> &amp; precision</p>
+</footer>
+
+<script>
+/* PARTICLES */
+(()=>{
+  const c=document.getElementById('star-canvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const resize=()=>{
+    W=c.width=innerWidth;H=c.height=innerHeight;
+    pts=[];for(let i=0;i<100;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,a:Math.random()*Math.PI*2});
+  };
+  resize();window.addEventListener('resize',resize);
+  const draw=()=>{
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=.005;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fillStyle=`rgba(200,168,75,${.2+Math.sin(p.a)*.15})`;ctx.fill();});
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(200,168,75,${.055*(1-d/100)})`;ctx.stroke();}}
+    requestAnimationFrame(draw);
+  };draw();
+})();
+
+/* CURSOR */
+const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.s-block,.a-pill,.c-link,.e-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+
+/* NAV */
+const nav=document.getElementById('nav');
+const toggle = document.getElementById('nav-toggle'),
+      overlay = document.getElementById('sidebar-overlay'),
+      sidebarLinks = document.querySelectorAll('.sidebar-links a');
+
+const toggleSidebar = () => document.body.classList.toggle('sidebar-open');
+
+toggle.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+sidebarLinks.forEach(link => link.addEventListener('click', () => {
+    document.body.classList.remove('sidebar-open');
+}));
+
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',scrollY>50);
+  const secs=document.querySelectorAll('section[id]'),links=document.querySelectorAll('.nav-links a[href^="#"]');
+  let cur='';secs.forEach(s=>{if(scrollY>=s.offsetTop-150)cur=s.id;});
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+/* REVEAL */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.s-bar-fill').forEach(b=>b.style.width=b.dataset.w+'%');
+    if(e.target.classList.contains('s-block'))e.target.querySelectorAll('.s-bar-fill').forEach(b=>b.style.width=b.dataset.w+'%');
+  });
+},{threshold:.1});
+document.querySelectorAll('.rev,.rev-l,.e-item').forEach(el=>ro.observe(el));
+document.querySelectorAll('.skills-grid .s-block').forEach((el,i)=>el.style.transitionDelay=i*.08+'s');
+document.querySelectorAll('.about-pills .a-pill').forEach((el,i)=>el.style.transitionDelay=i*.1+'s');
+
+/* MAGNETIC */
+document.querySelectorAll('.btn-p,.btn-s,.btn-send,.nav-hire').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;btn.style.transform=`translate(${x*.18}px,${y*.18}px)`;});
+  btn.addEventListener('mouseleave',()=>btn.style.transform='');
+});
+
+/* FORM */
+function doSend(){
+  const nameInput = document.getElementById('cf1');
+  const emailInput = document.getElementById('cf2');
+  const subjectInput = document.getElementById('cf3');
+  const messageInput = document.getElementById('cf4');
+  const btn = document.getElementById('bsend');
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const subject = subjectInput.value.trim();
+  const message = messageInput.value.trim();
+
+  if(!name || !email || !message){
+    btn.textContent = '⚠ Please fill required fields';
+    btn.style.borderColor = '#ff4444';
+    btn.style.color = '#ff4444';
+    setTimeout(()=>{
+      btn.innerHTML = 'Send Message <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2200);
+    return;
+  }
+
+  // --- CONFIGURATION ---
+  const wpNum = "917905002124"; // User's real number update
+  // ---------------------
+
+  const formattedMsg = `*New Contact Form Submission*%0A%0A` +
+                      `*Name:* ${encodeURIComponent(name)}%0A` +
+                      `*Email:* ${encodeURIComponent(email)}%0A` +
+                      `*Subject:* ${encodeURIComponent(subject || 'No Subject')}%0A%0A` +
+                      `*Message:*%0A${encodeURIComponent(message)}`;
+
+  const wpUrl = `https://wa.me/${wpNum}?text=${formattedMsg}`;
+
+  btn.textContent = '✓ Redirecting to WhatsApp...';
+  btn.classList.add('ok');
+
+  // Open WhatsApp in a new tab
+  window.open(wpUrl, '_blank');
+
+  // Reset form after a short delay
+  setTimeout(()=>{
+    [nameInput, emailInput, subjectInput, messageInput].forEach(i => i.value = '');
+    btn.innerHTML = 'Send Message <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    btn.classList.remove('ok');
+  }, 3200);
+}
+</script>
+</body>
+</html>
